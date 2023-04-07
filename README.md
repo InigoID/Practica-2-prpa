@@ -1,4 +1,7 @@
-El invariante del monitor es: self.cars_in_bridge.value == 0 or (self.people_in_bridge.value == 0 and (self.cars_in_bridge.value <= 1 and (self.current_direction == direction)))
-El puente es seguro porque cuando un coche o una persona quiere entrar al puente tiene que adquirir el mutex y comprobar si hay algún coche en el sentido opuesto o persona.
-Tenemos ausencia de deadlocks porque el proceso que espera siempre libera el mutex antes de esperar en la cola y cuando lo hace se notifica a otro en la cola.
-Tenemos ausencia de inanición porque cuando un proceso desea entrar al puente pero el invariante del monitor no se cumple, espera en la cola self.people_waiting y si lo abandona, se notifica a los procesos en la cola.
+El invariante del monitor es: ((self.pedestrians.value > 0 and self.north_cars.value == 0 and self.south_cars.value == 0) or (self.pedestrians.value == 0 and (self.north_cars.value > 0 and self.south_cars.value == 0) or (self.north_cars.value == 0 and self.south_cars.value > 0))) and (self.waiting_north.value >= 0 and self.waiting_south.value >= 0 and self.waiting_pedestrians.value >= 0)
+
+El puente es seguro gracias a las condiciones de espera self.bridge.wait_for ya que cuando un coche / peatón quiere entrar, se verifica antes si hay coches en la dirección opuesta / peatones en el puente.
+
+Tenemos ausencia de deadlocks porque self.bridge.notify_all() avisa de cuando los coches o peatones salen del puente para que entren los siguientes en la cola.
+
+Tenemos ausencia de inanición porque utiliza un sistema de turnos y cuando un proceso desea entrar al puente pero el invariante del monitor no se cumple, espera en la cola self.people_waiting y si lo abandona, se notifica a los procesos en la cola. 
