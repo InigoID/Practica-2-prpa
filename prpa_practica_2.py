@@ -7,7 +7,7 @@ from multiprocessing import Value
 SOUTH = "south"
 NORTH = "north"
 
-NCARS = 10
+NCARS = 100
 NPEOPLE = 10
 
 
