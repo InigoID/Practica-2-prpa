@@ -61,6 +61,7 @@ class Monitor():
             self.pedestrians.value -= 1
             self.bridge.notify_all()
 
+
 def delay_car_north() -> None:
     time.sleep(random.uniform(TIME_IN_BRIDGE_CARS[0], TIME_IN_BRIDGE_CARS[1]))
 
@@ -131,3 +132,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
